@@ -5,6 +5,8 @@
     <classes>
       <class name="testsuite.ExecuteTests">
         <methods>
+          <include name="tearDown"/>
+          <include name="setUp"/>
           <include name="executeTestCases"/>
         </methods>
       </class> <!-- testsuite.ExecuteTests -->

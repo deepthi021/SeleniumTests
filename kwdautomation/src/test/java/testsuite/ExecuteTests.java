@@ -1,36 +1,49 @@
 package testsuite;
+import java.io.File;
+import java.io.PrintStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
-
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.WebDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
-
 import operations.Action;
 import utilities.ReadExcelFile;
 import utilities.ReadObject;
 
-
-// Deepthi's new code
-
 public class ExecuteTests {
-	WebDriver driver = null;
+	WebDriver driver;
 	
-	String path = "C:\\Users\\Deepthi\\eclipse-workspace\\kwdautomation\\src\\test\\java";
-	String driverPath =path+"\\drivers\\";	
-	String testSuitePath=path + "\\testscenarios";
+	//String path = "C:\\Users\\Deepthi\\eclipse-workspace\\kwdautomation\\src\\test\\java";	
+	String path =System.getProperty("user.dir") + "\\src\\test\\java\\";
+	String driverPath =path+"drivers\\";	
+	String testSuitePath=path + "testscenarios";
 	String fileName="TestCases.xlsx";
-	String propFile= path+"\\testscenarios\\objectrepos.properties";
-	
+	String propFile= path+"testscenarios\\objectrepos.properties";	
 	String keyword= null;
+	String browser="chrome";
+	String os="windows";
+	String osVer="10.0";
+	String url = "http://demowebshop.tricentis.com/";
+	Action act = new Action(driver);
+	PrintStream consoleOut;
 	
+	@BeforeClass
+	public void setUp()
+	{		
+		act.OpenApp(driverPath, browser, os, osVer, url);
+	}
 	@Test
 	public void executeTestCases() throws Exception {
-		
+		System.out.println();
+		consoleOut = new PrintStream(new File(
+				System.getProperty("user.dir")+"\\Reports\\" + os + "_" + osVer + "_"
+						+ browser + "_TestResults" + "_ConsoleLog.txt"));
+		System.setOut(consoleOut);
+		System.out.println(
+				"**************************** Printing Console Logs Starts Here !!! **************************");
 		ReadExcelFile readxl = new ReadExcelFile();		
 		//XSSFWorkbook wb = new XSSFWorkbook(stream);		
 		XSSFSheet sheet =readxl.readExcel(testSuitePath, fileName, "testcases");		
@@ -52,23 +65,26 @@ public class ExecuteTests {
 				String Parm3 = sheet.getRow(i).getCell(9).toString();
 				String Parm4 = sheet.getRow(i).getCell(10).toString();
 				String Execute = sheet.getRow(i).getCell(11).toString();
-				String Screenshots = sheet.getRow(i).getCell(12).toString();
-				String Status = sheet.getRow(i).getCell(13).toString();		
+				String Status = sheet.getRow(i).getCell(12).toString();		
 				
 				System.out.println(TestCaseID + " " + TestCaseDesc+ " " +  TestStepID+ " " + 	TestStepDesc+ " " + 
 				Keywords+ " " +	LocatorName+ " " + 	LocatorType	+ " " + Parm1+ " " + 	Parm2	+ " " + Parm3+ " " + 
-						Parm4+ " " + 	Execute+ " " + 	Screenshots+ " " + 	Status);				
+						Parm4+ " " + 	Execute+ " " + 	Status);				
 				
 				if(Execute.equalsIgnoreCase("yes")) {
-					//Status="SKIP";
-					Action act = new Action(driver);
 					ReadObject obj = new ReadObject();
 					Properties allObjects = obj.getObjectProperty(propFile);					
 					String res=act.UIOperations(Keywords,LocatorName,LocatorType,Parm1,Parm2,Parm3,Parm4,allObjects);
-					System.out.println(res);	
+					System.out.println(res);						
 					}
-			}
-			System.out.println();
+				System.out.println();
+			}			
+			System.out
+			.println("**************************** Printing Console Logs Ends Here !!! **************************");
 		}	
 
+	@AfterClass
+	public void tearDown() throws Exception {
+		act.CloseApp();
+	}
 }

@@ -1,5 +1,7 @@
 package operations;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 import org.openqa.selenium.By;
@@ -10,15 +12,13 @@ import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
-import utilities.ReadObject;
+import utilities.GetScreenShot;
 
 public class Action {	
 	WebDriver driver;
 	String result="";
-	String path = "C:\\Users\\Deepthi\\eclipse-workspace\\kwdautomation\\src\\test\\java";
-	String driverPath =path+"\\drivers\\";
-
-
+	GetScreenShot getScreen = new GetScreenShot(driver);
+	
 	public Action(WebDriver dr) {
 		this.driver =dr; 
 	}
@@ -26,40 +26,21 @@ public class Action {
 	public String UIOperations(String kw,String locName,String LocType,String eVal1,String eVal2,String eVal3,String eVal4, Properties p) {
 	
 		
-		switch(kw.toUpperCase()) {			
-
-		case "APPOPEN":
-			try {
-			OpenApp(driverPath, eVal1, eVal2, eVal3, eVal4);
-			result="Pass";
-			} catch (Exception e) {				
-				e.printStackTrace();
-				System.out.println("Unable to perform action: "+kw.toUpperCase()+ e);
-				result="Fail";
-			}
-		break;
-		
-		case "APPCLOSE":
-			try {
-			CloseApp();
-			result="Pass";
-			} catch (Exception e) {				
-				e.printStackTrace();
-				System.out.println("Unable to perform action: "+kw.toUpperCase()+ e);
-				result="Fail";
-			}
-		break;
-		
+		switch(kw.toUpperCase()) {					
 		case "CLICK":
 			try {
 				//System.out.println(this.getObject(p, locName, LocType));
-			Thread.sleep(3000);
-				WebElement eleClick = driver.findElement(By.linkText("Log in"));	
-			//WebElement eleClick = driver.findElement(this.getObject(p, locName, LocType));
+			//WebElement eleClick = driver.findElement(By.linkText("Log in"));	
+			WebElement eleClick = driver.findElement(this.getObject(p, locName, LocType));
 			boolean flag = eleClick.isDisplayed();
 			if(flag=true) {
 				eleClick.click();
 				result="Pass";
+					String passtimeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+					String path1 = System.getProperty("user.dir")+ "\\Reports\\Screenshots\\";
+					String path2 = passtimeStamp + "_" + kw + ".jpg";
+					System.out.println("Image Location path : >>>" + path1 + path2);
+					String imgLoc1 = getScreen.screencapture(path1, path2);
 			}
 			else{
 				result="Fail";
@@ -70,10 +51,32 @@ public class Action {
 				result="Fail";
 			}
 		break;
-		
 		case "WAIT":
 			try {
-				waitCustomized(Long.parseLong(eVal1));
+				Thread.sleep(3000);
+				result="Pass";
+			} catch (Exception e) {				
+				e.printStackTrace();
+				System.out.println("Unable to perform action: "+kw.toUpperCase()+ e);
+				result="Fail";
+			}
+			
+		break;
+		
+		case "WAIT-MED":
+			try {
+				Thread.sleep(10000);
+				result="Pass";
+			} catch (Exception e) {				
+				e.printStackTrace();
+				System.out.println("Unable to perform action: "+kw.toUpperCase()+ e);
+				result="Fail";
+			}
+			
+		break;
+		case "WAIT-HIGH":
+			try {
+				Thread.sleep(20000);
 				result="Pass";
 			} catch (Exception e) {				
 				e.printStackTrace();
@@ -124,15 +127,9 @@ public class Action {
 		return result;
 		
 	}
-	
-	
-	
-	
-	
-	
-	
+		
 	//APPOPEN
-	public WebDriver OpenApp(String path, String browser, String os, String osVer, String url) {
+	public void OpenApp(String path, String browser, String os, String osVer, String url) {
 	
 		
 //		 System.out.println("This is: " + browser);		 
@@ -175,7 +172,6 @@ public class Action {
 		System.out.println(e.getMessage());
 		driver.quit();
 	}
-	return driver;
 	}
 	
 	//APPCLOSE
@@ -191,16 +187,14 @@ public class Action {
 		} catch (Exception e) {
 			System.out.println(e.getStackTrace());
 		}
-		//return driver;
 	}
-	
 	
 	//WAIT
 	public void waitCustomized(long waittime) throws InterruptedException {
 		Thread.sleep(waittime);
 	}
 	
-
+	// Get Object Properties By options
 	private By getObject(Properties p, String objectName, String objectType) throws Exception {
 		
 		//Find by XPATH

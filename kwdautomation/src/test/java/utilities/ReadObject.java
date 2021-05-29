@@ -12,8 +12,7 @@ public class ReadObject {
 	public Properties getObjectProperty(String propFilePath) {
 		
 		try {
-			System.out.println(propFilePath);
-			
+		//	System.out.println(propFilePath);			
 			InputStream strm = new FileInputStream(new File(propFilePath));
 			p.load(strm);
 		}catch(Exception e) {

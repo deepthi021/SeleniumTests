@@ -1,59 +1,31 @@
 **************************** Printing Console Logs Starts Here !!! **************************
-No. of rows found = 9
+No. of rows found = 10
 Row 1th data is  : 
-TC-001 Verify User Login TC-001-TS-01 Click on Login link CLICK lnk_login link     Yes No Run
-ScreenShot file name: C:\Users\Deepthi\Desktop\SeleniumGitCode\kwdautomation\Reports\Screenshots\2021.05.29.12.10.32_CLICK.jpg
-Pass
+TC-001 Verify User Login TC-001-TS-01 Click on Login link CLICK lnk_login link     No No Run
 
 Row 2th data is  : 
-TC-001 Verify User Login TC-001-TS-02 Waiting for few minutes WAIT       Yes No Run
-Pass
+TC-001 Verify User Login TC-001-TS-02 Waiting for few minutes WAIT       No No Run
 
 Row 3th data is  : 
-TC-001 Verify User Login TC-001-TS-03 Enter User Name TYPE txtbx_username id deepthito@gmail.com    Yes No Run
-ScreenShot file name: C:\Users\Deepthi\Desktop\SeleniumGitCode\kwdautomation\Reports\Screenshots\2021.05.29.12.10.36_TYPE.jpg
-Pass
+TC-001 Verify User Login TC-001-TS-03 Enter User Name TYPE txtbx_username id deepthito@gmail.com    No No Run
 
 Row 4th data is  : 
-TC-001 Verify User Login TC-001-TS-04 Enter User Password TYPE txtbx_userpwd id test123    Yes No Run
-ScreenShot file name: C:\Users\Deepthi\Desktop\SeleniumGitCode\kwdautomation\Reports\Screenshots\2021.05.29.12.10.37_TYPE.jpg
-Pass
+TC-001 Verify User Login TC-001-TS-04 Enter User Password TYPE txtbx_userpwd id test123    No No Run
 
 Row 5th data is  : 
-TC-001 Verify User Login TC-001-TS-05 Click on Login Button CLICK btn_Login xpath     Yes No Run
-ScreenShot file name: C:\Users\Deepthi\Desktop\SeleniumGitCode\kwdautomation\Reports\Screenshots\2021.05.29.12.10.39_CLICK.jpg
-Pass
+TC-001 Verify User Login TC-001-TS-05 Click on Login Button CLICK btn_Login xpath     No No Run
 
 Row 6th data is  : 
-TC-001 Verify User Login TC-001-TS-06 Waiting for few minutes WAIT       Yes No Run
-Pass
+TC-001 Verify User Login TC-001-TS-06 Waiting for few minutes WAIT       No No Run
 
 Row 7th data is  : 
-TC-001 Verify User Login TC-001-TS-07 Click on Logoff link CLICK lnk_logoff link     Yes No Run
-ScreenShot file name: C:\Users\Deepthi\Desktop\SeleniumGitCode\kwdautomation\Reports\Screenshots\2021.05.29.12.10.44_CLICK.jpg
-Pass
+TC-001 Verify User Login TC-001-TS-07 Click on Logoff link CLICK lnk_logoff link     No No Run
 
 Row 8th data is  : 
-TC-001 Verify User Login TC-001-TS-08 Waiting for few minutes WAIT       Yes No Run
-Pass
+TC-001 Verify User Login TC-001-TS-08 Waiting for few minutes WAIT       No No Run
 
 Row 9th data is  : 
-TC-001 Verify User Login TC-001-TS-09 Verify Login link availability ASSERT lnk_login link TRUE    Yes No Run
-ScreenShot file name: C:\Users\Deepthi\Desktop\SeleniumGitCode\kwdautomation\Reports\Screenshots\2021.05.29.12.10.48_ASSERT.jpg
-Pass
+TC-001 Verify User Login TC-001-TS-09 Verify Login link availability ASSERT lnk_login link TRUE    No No Run
 
-**************************** Printing Console Logs Ends Here !!! **************************
-Closing the Application
-PASSED: executeTestCases
-
-===============================================
-    Default test
-    Tests run: 1, Failures: 0, Skips: 0
-===============================================
-
-
-===============================================
-Default suite
-Total tests run: 1, Passes: 1, Failures: 0, Skips: 0
-===============================================
-
+Row 10th data is  : 
+TC-002 Verify DB Tables TC-002-TS-01 Verify DB for this Query DBTEST   SELECT * from employee;    Yes No Run

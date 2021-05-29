@@ -1,5 +1,10 @@
 package operations;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Properties;
@@ -24,13 +29,14 @@ public class Action {
 		this.driver =dr; 
 	}
 	
-	public String UIOperations(String kw,String locName,String LocType,String eVal1,String eVal2,String eVal3,String eVal4, Properties p) {
+	public String UIOperations(String kw,String locName,String LocType,String eVal1,String eVal2,String eVal3,String eVal4, Properties p) throws SQLException {
 	
 		Utility util= new Utility(driver);
 		GetScreenShot getScreen = new GetScreenShot(driver);
 		String passtimeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
 		String path1 = System.getProperty("user.dir")+ "\\Reports\\Screenshots\\";
 		String path2 = passtimeStamp + "_" + kw + ".jpg";
+		
 		
 		switch(kw.toUpperCase()) {					
 		case "CLICK":
@@ -129,6 +135,46 @@ public class Action {
 					result="Fail";
 				}
 		break;
+		case "DBTEST":
+				Connection c=null;
+				Statement stmt= null;
+
+	      try {
+	         Class.forName("org.postgresql.Driver");
+	         c = DriverManager
+	            .getConnection("jdbc:postgresql://localhost:5432/demo",
+	            "postgres", "admin");
+	      } catch (Exception e) {
+	         e.printStackTrace();
+	         System.err.println(e.getClass().getName()+": "+e.getMessage());
+	         System.exit(0);
+	      }
+	      System.out.println("Opened database successfully");
+	      
+	      
+	      stmt = c.createStatement();
+	         String sql = eVal1;        
+	         
+	         ResultSet rs = stmt.executeQuery(sql);
+	           
+	           while ( rs.next() ) {
+	              int id = rs.getInt("user_id");
+	              String  name = rs.getString("username");
+	              String pwd  = rs.getString("password");
+	              String  email = rs.getString("email");
+	              
+	              System.out.println( "USER ID = " + id );
+	              System.out.println( "USER NAME = " + name );	
+	              
+	              rs.close();
+	              stmt.close();
+	              c.close();
+	              
+
+	           } 
+		break;
+		
+		
 		default:
 		break;
 		}

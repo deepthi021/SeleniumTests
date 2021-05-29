@@ -5,5 +5,5 @@
     <classes>
       <class name="testsuite.ExecuteTests"/>
     </classes>
-  </test> <!-- Test -->
+  </test> 
 </suite> <!-- Suite -->

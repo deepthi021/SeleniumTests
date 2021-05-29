@@ -15,7 +15,7 @@ public class Utility {
 		for (int i = 0; i < 3; i++) {
 			JavascriptExecutor js = (JavascriptExecutor) driver;
 			js.executeScript("arguments[0].setAttribute('style', arguments[1]);", element,
-					"color: orange; border: 2px solid yellow;");
+					"color: orange; border: 2px solid RED;");
 			Thread.sleep(200);
 			js.executeScript("arguments[0].setAttribute('style', arguments[1]);", element, "");
 		}

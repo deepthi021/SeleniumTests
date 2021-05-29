@@ -13,11 +13,12 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 
 import utilities.GetScreenShot;
+import utilities.Utility;
 
 public class Action {	
 	WebDriver driver;
 	String result="";
-	GetScreenShot getScreen = new GetScreenShot(driver);
+	
 	
 	public Action(WebDriver dr) {
 		this.driver =dr; 
@@ -25,6 +26,11 @@ public class Action {
 	
 	public String UIOperations(String kw,String locName,String LocType,String eVal1,String eVal2,String eVal3,String eVal4, Properties p) {
 	
+		Utility util= new Utility(driver);
+		GetScreenShot getScreen = new GetScreenShot(driver);
+		String passtimeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
+		String path1 = System.getProperty("user.dir")+ "\\Reports\\Screenshots\\";
+		String path2 = passtimeStamp + "_" + kw + ".jpg";
 		
 		switch(kw.toUpperCase()) {					
 		case "CLICK":
@@ -34,13 +40,11 @@ public class Action {
 			WebElement eleClick = driver.findElement(this.getObject(p, locName, LocType));
 			boolean flag = eleClick.isDisplayed();
 			if(flag=true) {
+				util.highlightElement(eleClick);
 				eleClick.click();
-				result="Pass";
-					String passtimeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
-					String path1 = System.getProperty("user.dir")+ "\\Reports\\Screenshots\\";
-					String path2 = passtimeStamp + "_" + kw + ".jpg";
-					System.out.println("Image Location path : >>>" + path1 + path2);
-					String imgLoc1 = getScreen.screencapture(path1, path2);
+				result="Pass";					
+				//System.out.println("Image Location path : >>>" + path1 + path2);
+				String imgLoc1 = getScreen.screencapture(path1, path2);
 			}
 			else{
 				result="Fail";
@@ -91,9 +95,11 @@ public class Action {
 				WebElement eleType = driver.findElement(this.getObject(p, locName, LocType));
 				boolean flag = eleType.isDisplayed();
 				if(flag=true) {
+					util.highlightElement(eleType);
 					eleType.clear();
 					eleType.sendKeys(eVal1);
 					result="Pass";
+					String imgLoc1 = getScreen.screencapture(path1, path2);
 				}
 				else{
 					result="Fail";
@@ -107,10 +113,12 @@ public class Action {
 		
 		case "ASSERT":
 			try {
-				WebElement eleType = driver.findElement(this.getObject(p, locName, LocType));
-				boolean flag = eleType.isDisplayed();
+				WebElement eleAsserte = driver.findElement(this.getObject(p, locName, LocType));
+				boolean flag = eleAsserte.isDisplayed();
+				util.highlightElement(eleAsserte);
 				if(flag=Boolean.parseBoolean(eVal1)) {					
 					result="Pass";
+					String imgLoc1 = getScreen.screencapture(path1, path2);
 				}
 				else{
 					result="Fail";
